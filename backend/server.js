@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import userRoutes from "./routes/user.js";
+import userRoutes from "./routes/user.js"; // ✅
 
 dotenv.config();
 const app = express();
@@ -10,7 +10,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/user", userRoutes);
+// ✅ Health check route
+app.get('/', (req, res) => {
+  res.send('Yogalayer backend is working ✅');
+});
+
+// ✅ Register API routes
+app.use("/api/user", userRoutes); // ✅ now routes like /register will work
 
 mongoose
   .connect(process.env.MONGO_URI)

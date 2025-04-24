@@ -5,7 +5,12 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// Register
+// ✅ Test route for registration
+router.post('/register/test', (req, res) => {
+  res.json({ message: 'Register route hit!' });
+});
+
+// ✅ Main Register route
 router.post("/register", async (req, res) => {
   try {
     const { fullName, mobile, email, password } = req.body;
@@ -26,7 +31,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login
+// ✅ Login
 router.post("/login", async (req, res) => {
   try {
     const { emailOrMobile, password } = req.body;
@@ -45,7 +50,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Update cart
+// ✅ Update cart
 router.put("/cart/:id", async (req, res) => {
   try {
     const { cart } = req.body;
@@ -60,7 +65,7 @@ router.put("/cart/:id", async (req, res) => {
   }
 });
 
-// Update wishlist
+// ✅ Update wishlist
 router.put("/wishlist/:id", async (req, res) => {
   try {
     const { wishlist } = req.body;
@@ -75,7 +80,7 @@ router.put("/wishlist/:id", async (req, res) => {
   }
 });
 
-// Checkout - save order
+// ✅ Checkout - save order
 router.post("/checkout/:id", async (req, res) => {
   try {
     const { items, total } = req.body;

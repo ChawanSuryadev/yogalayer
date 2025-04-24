@@ -63,10 +63,7 @@ export default function AddressPage({ user, setUser }) {
       >
         Save Address
       </button>
-      <Link to="/address" className="text-blue-600 hover:underline">
-  Edit Address
-</Link>
-
+      
     </div>
   );
 }
