@@ -14,8 +14,17 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  // 🔍 Optional utility function for debugging or future use
+  const onClick = () => {
+    // Accessing VITE_API_BASE_URL through import.meta.env
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    console.log("🔧 API Base URL from onClick:", apiUrl);
+
+    // ... rest of your code ...
+  };
+
   const handleCreateAccount = async () => {
-    console.log("🌍 API Base URL:", import.meta.env.VITE_API_BASE_URL); // Debug log
+    console.log("🌍 API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/register`, {
@@ -34,7 +43,7 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
         alert(data.error || "Registration failed");
       }
     } catch (err) {
-      console.error("Error during registration:", err); // Enhanced error logging
+      console.error("Error during registration:", err);
       alert("Network error");
     }
   };
