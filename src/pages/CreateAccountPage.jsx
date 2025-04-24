@@ -15,6 +15,8 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
   };
 
   const handleCreateAccount = async () => {
+    console.log("🌍 API Base URL:", import.meta.env.VITE_API_BASE_URL); // Debug log
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/register`, {
         method: "POST",
@@ -32,13 +34,10 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
         alert(data.error || "Registration failed");
       }
     } catch (err) {
-      // 👇 Add this part here for better error debugging
-      console.error("Error during registration:", err);
+      console.error("Error during registration:", err); // Enhanced error logging
       alert("Network error");
     }
   };
-  
-  
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded shadow">
