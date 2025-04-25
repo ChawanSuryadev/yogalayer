@@ -16,8 +16,7 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
   };
 
   const handleCreateAccount = async () => {
-    const apiUrl = "http://localhost:5000"; // TEMP HARDCODE
-
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     console.log("✅ API Base URL:", apiUrl);
 
     if (!apiUrl) {
