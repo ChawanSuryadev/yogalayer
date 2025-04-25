@@ -8,30 +8,31 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  // 🔍 Optional utility function for debugging or future use
-  const onClick = () => {
-    // Accessing VITE_API_BASE_URL through import.meta.env
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    console.log("🔧 API Base URL from onClick:", apiUrl);
-
-    // ... rest of your code ...
-  };
-
   const handleCreateAccount = async () => {
-    console.log("🌍 API Base URL:", import.meta.env.VITE_API_BASE_URL);
+    const apiUrl = "http://localhost:5000"; // TEMP HARDCODE
+
+    console.log("✅ API Base URL:", apiUrl);
+
+    if (!apiUrl) {
+      console.error("❌ VITE_API_BASE_URL is not defined.");
+      alert("API base URL is missing. Check your .env file.");
+      return;
+    }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/register`, {
+      const res = await fetch(`${apiUrl}/api/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
       const data = await res.json();
       if (res.ok) {
         setUser(data.user);
@@ -43,7 +44,7 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
         alert(data.error || "Registration failed");
       }
     } catch (err) {
-      console.error("Error during registration:", err);
+      console.error("❌ Network error:", err);
       alert("Network error");
     }
   };

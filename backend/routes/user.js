@@ -5,12 +5,12 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// ✅ Test route for registration
+// ✅ Test route
 router.post('/register/test', (req, res) => {
   res.json({ message: 'Register route hit!' });
 });
 
-// ✅ Main Register route
+// ✅ Register
 router.post("/register", async (req, res) => {
   try {
     const { fullName, mobile, email, password } = req.body;
@@ -18,6 +18,7 @@ router.post("/register", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       fullName,
@@ -25,6 +26,7 @@ router.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
     });
+
     res.status(201).json({ message: "User registered", user });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -43,8 +45,23 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
     res.json({ token, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Update address
+router.put("/address/:id", async (req, res) => {
+  try {
+    const { address } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { address },
+      { new: true }
+    );
+    res.json(updatedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -80,13 +97,13 @@ router.put("/wishlist/:id", async (req, res) => {
   }
 });
 
-// ✅ Checkout - save order
+// ✅ Checkout
 router.post("/checkout/:id", async (req, res) => {
   try {
     const { items, total } = req.body;
     const user = await User.findById(req.params.id);
     user.orders.push({ items, total, paidAt: new Date() });
-    user.cart = []; // clear cart
+    user.cart = [];
     await user.save();
     res.json({ message: "Order placed", user });
   } catch (err) {

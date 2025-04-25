@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import userRoutes from "./routes/user.js"; // ✅
+import userRoutes from "./routes/user.js";
 
 dotenv.config();
 const app = express();
@@ -16,8 +16,9 @@ app.get('/', (req, res) => {
 });
 
 // ✅ Register API routes
-app.use("/api/user", userRoutes); // ✅ now routes like /register will work
+app.use("/api/user", userRoutes);
 
+// ✅ MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))

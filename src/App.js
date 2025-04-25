@@ -8,7 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AddressPage from "./pages/AddressPage";
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
 function App() {
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);

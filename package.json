@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.14",
     "lucide-react": "^0.276.0",
     "postcss": "^8.4.21",
