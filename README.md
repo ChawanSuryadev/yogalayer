@@ -2,8 +2,10 @@
     An ecommerce project built from scratch with React, Node.js, Express, MongoDB, Vercel, Render, and UptimeRobot monitoring.
 This project is designed, developed, deployed, and maintained with production-ready practices.
 
-                                    📂 Project Directory Structure
-
+📂 Project Directory Structure
+pgsql
+Copy
+Edit
 yogalayer/
 ├── backend/
 │   ├── models/
