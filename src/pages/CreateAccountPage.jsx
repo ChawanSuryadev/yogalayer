@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
@@ -16,12 +17,12 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
   };
 
   const handleCreateAccount = async () => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    const apiUrl = "https://yogalayer-backend.onrender.com"; // TEMPORARY HARDCODE
     console.log("✅ API Base URL:", apiUrl);
 
     if (!apiUrl) {
       console.error("❌ VITE_API_BASE_URL is not defined.");
-      alert("API base URL is missing. Check your .env file.");
+      toast.error("API base URL is missing. Check your .env file.");
       return;
     }
 
@@ -38,13 +39,14 @@ export default function CreateAccountPage({ setUser, setCart, setWishlist }) {
         setCart([]);
         setWishlist([]);
         localStorage.setItem("user", JSON.stringify(data.user));
+        toast.success("Account Created Successfully!");
         navigate("/");
       } else {
-        alert(data.error || "Registration failed");
+        toast.error(data.error || "Registration failed");
       }
     } catch (err) {
       console.error("❌ Network error:", err);
-      alert("Network error");
+      toast.error("Network error");
     }
   };
 

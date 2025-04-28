@@ -8,7 +8,9 @@ import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AddressPage from "./pages/AddressPage";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -69,66 +71,69 @@ function App() {
   };
 
   return (
-    <Router>
-      <Header
-        onLoginClick={() => setShowLogin(true)}
-        user={user}
-        onLogout={() => {
-          setUser(null);
-          setCart([]);
-          setWishlist([]);
-        }}
-      />
-
-      {showLogin && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <LoginModal onClose={() => setShowLogin(false)} setUser={setUser} setCart={setCart} setWishlist={setWishlist} />
-          </div>
-        </div>
-      )}
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              products={[
-                {
-                  id: 1,
-                  name: "Redmi Note 13",
-                  price: 22677,
-                  mrp: 30999,
-                  image: "https://m.media-amazon.com/images/I/71YlH-4MUQL._AC_UY218_.jpg",
-                },
-                {
-                  id: 2,
-                  name: "Realme Narzo 60",
-                  price: 26999,
-                  mrp: 26999,
-                  image: "https://m.media-amazon.com/images/I/81Zt42ioCgL._AC_UY218_.jpg",
-                },
-                {
-                  id: 3,
-                  name: "iPhone 15 Pro",
-                  price: 64400,
-                  mrp: 69900,
-                  image: "https://m.media-amazon.com/images/I/81CgtwSII3L._AC_UY218_.jpg",
-                },
-              ]}
-              addToCart={addToCart}
-              addToWishlist={addToWishlist}
-              calculateDiscount={calculateDiscount}
-            />
-          }
+    <>
+      <Toaster position="top-center" />
+      <Router>
+        <Header
+          onLoginClick={() => setShowLogin(true)}
+          user={user}
+          onLogout={() => {
+            setUser(null);
+            setCart([]);
+            setWishlist([]);
+          }}
         />
-        <Route path="/profile" element={<ProfilePage user={user} />} />
-        <Route path="/create-account" element={<CreateAccountPage setUser={setUser} setCart={setCart} setWishlist={setWishlist} />} />
-        <Route path="/orders" element={<OrderHistoryPage user={user} />} />
-        <Route path="/address" element={<AddressPage user={user} setUser={setUser} />} />
-        <Route path="/checkout" element={<CheckoutPage cart={cart} user={user} setCart={setCart} />} />
-      </Routes>
-    </Router>
+
+        {showLogin && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <LoginModal onClose={() => setShowLogin(false)} setUser={setUser} setCart={setCart} setWishlist={setWishlist} />
+            </div>
+          </div>
+        )}
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                products={[
+                  {
+                    id: 1,
+                    name: "Redmi Note 13",
+                    price: 22677,
+                    mrp: 30999,
+                    image: "https://m.media-amazon.com/images/I/71YlH-4MUQL._AC_UY218_.jpg",
+                  },
+                  {
+                    id: 2,
+                    name: "Realme Narzo 60",
+                    price: 26999,
+                    mrp: 26999,
+                    image: "https://m.media-amazon.com/images/I/81Zt42ioCgL._AC_UY218_.jpg",
+                  },
+                  {
+                    id: 3,
+                    name: "iPhone 15 Pro",
+                    price: 64400,
+                    mrp: 69900,
+                    image: "https://m.media-amazon.com/images/I/81CgtwSII3L._AC_UY218_.jpg",
+                  },
+                ]}
+                addToCart={addToCart}
+                addToWishlist={addToWishlist}
+                calculateDiscount={calculateDiscount}
+              />
+            }
+          />
+          <Route path="/profile" element={<ProfilePage user={user} />} />
+          <Route path="/create-account" element={<CreateAccountPage setUser={setUser} setCart={setCart} setWishlist={setWishlist} />} />
+          <Route path="/orders" element={<OrderHistoryPage user={user} />} />
+          <Route path="/address" element={<AddressPage user={user} setUser={setUser} />} />
+          <Route path="/checkout" element={<CheckoutPage cart={cart} user={user} setCart={setCart} />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

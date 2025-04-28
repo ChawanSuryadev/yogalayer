@@ -27,7 +27,14 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: "User registered", user });
+    // ✅ Generate JWT token valid for 2 days
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "2d" }
+    );
+
+    res.status(201).json({ message: "User registered", user, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -45,10 +52,30 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    // ✅ Generate JWT token valid for 2 days
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "2d" }
+    );
+
     res.json({ token, user });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Update profile
+router.put("/profile/:id", async (req, res) => {
+  try {
+    const updates = req.body;
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 10);
+    }
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updates, { new: true });
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
