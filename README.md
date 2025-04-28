@@ -1,151 +1,123 @@
-# Getting Started with Create React App
+                                            YOGALAYER 🧘‍♂️🛍️
+    An ecommerce project built from scratch with React, Node.js, Express, MongoDB, Vercel, Render, and UptimeRobot monitoring.
+This project is designed, developed, deployed, and maintained with production-ready practices.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-🧘‍♂️ Yogalayer
-A modern e-commerce app built with React, Node.js, Express, and MongoDB.
-Supports user login, account creation, wishlist, cart, checkout, and order history.
+                                    📂 Project Directory Structure
 
-## Available Scripts
-Live Demo:
-Frontend: https://yogalayer.vercel.app
-Backend API: https://yogalayer-backend.onrender.com
+yogalayer/
+├── backend/
+│   ├── models/
+│   │   └── User.js
+│   ├── routes/
+│   │   └── user.js
+│   ├── .env               # MongoDB URI and JWT secret (backend only)
+│   ├── package.json
+│   ├── server.js
+│
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── LoginModal.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── CreateAccountPage.jsx
+│   │   ├── ProfilePage.jsx
+│   │   ├── CheckoutPage.jsx
+│   │   ├── AddressPage.jsx
+│   │   ├── OrderHistoryPage.jsx
+│   ├── App.js
+│   ├── index.js
+│
+├── public/
+│   └── favicon.ico
+│
+├── .env                  # VITE_API_BASE_URL for frontend
+├── package.json          # frontend dependencies
+├── tailwind.config.js    # styling setup
+├── postcss.config.js
+└── README.md             # you are reading this!
+                                            
+                                            🚀 Technologies Used
 
-In the project directory, you can run:
-🛠️ Tech Stack
-Frontend: React + Vite + Tailwind CSS
+Tool/Service	                              Purpose
+  React.js	                           Frontend (Vite-based)
+Node.js + Express.js	                 Backend API server
+   MongoDB Atlas	        Cloud database for users, cart, wishlist, orders
+     Mongoose	                MongoDB ODM (Object Document Mapping)
+      Vercel	                  Frontend hosting and Speed Insights
+      Render	                           Backend hosting
+    UptimeRobot	                Keeping backend "awake" during idle times
+    TailwindCSS	                      Frontend styling framework
+ React Hot Toast	                      Toast notifications
+Vercel Speed Insights	       Real user monitoring (frontend performance)
 
-### `npm start`
-Backend: Node.js + Express.js
+                                            🌍 Deployment Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-Database: MongoDB Atlas
+Frontend hosted on Vercel ➔ https://yogalayer.vercel.app/
+Backend hosted on Render ➔ https://yogalayer-backend.onrender.com/
+UptimeRobot pings the backend every 5 minutes to avoid Render "sleep" mode.
+Environment Variables securely managed separately for Frontend (Vercel) and Backend (Render).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-Deployment: Vercel (Frontend) & Render (Backend)
+                                            
+                                            📖 Major Features Built
 
-### `npm test`
-⚡ Features
-✅ User account registration & login
+✅ User Registration and Login (email or mobile number)
+✅ LocalStorage persistence across browser sessions
+✅ Add to Cart and Add to Wishlist functionality
+✅ Sync Cart and Wishlist to MongoDB in real-time
+✅ Profile Page (view user info, address management)
+✅ Address Editing
+✅ Checkout Page (simulate order placement)
+✅ Order History
+✅ Toast notifications for actions
+✅ Responsive Header and Modal Login
+✅ Optimized deployments (Render backend + Vercel frontend)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-✅ Wishlist management
 
-### `npm run build`
-✅ Cart management
+                                            ⚡ What We Achieved Together
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-✅ Checkout & order saving
+Setup Backend with Express, connected MongoDB Atlas, and created RESTful APIs.
+Setup Frontend with React (Vite), and implemented a full ecommerce workflow.
+Deployed Frontend on Vercel, Backend on Render with health check working.
+Solved multiple issues:
+    .env environment variable problems.
+    Vite's import.meta.env setup.
+    CORS configuration between Render and Vercel.
+    UptimeRobot integration to prevent backend sleeping.
+    Added Speed Insights for real-user monitoring.
+Setup GitHub repo correctly with proper commits.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-✅ Address update
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-✅ Secure password hashing (bcryptjs)
+                                                ⚙️ How to Run Locally
 
-### `npm run eject`
-✅ JWT authentication
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-✅ Persistent login (localStorage)
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-✅ Mobile responsive design
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-🚀 Deployment
-Backend (Render.com)
-Push your backend code to GitHub.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-Go to Render.com → New Web Service → Connect your GitHub → Select repo.
-
-## Learn More
-Set Root Directory: backend/
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-Set Build Command: npm install
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-Set Start Command: node server.js
-
-### Code Splitting
-Set Environment Variables:
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-MONGO_URI: your MongoDB URI
-
-### Analyzing the Bundle Size
-JWT_SECRET: your JWT secret key
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-Deploy!
-
-### Making a Progressive Web App
-🔵 Optional:
-Use UptimeRobot.com to keep Render backend awake.
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-Frontend (Vercel.com)
-Push your full project to GitHub.
-
-### Advanced Configuration
-Go to Vercel.com → New Project → Import GitHub repo.
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-Set Root Directory: ./
-
-### Deployment
-Set Environment Variable:
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-VITE_API_BASE_URL: your Render backend URL (example: https://yogalayer-backend.onrender.com)
-
-### `npm run build` fails to minify
-Deploy!
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-🔥 Local Development
 Clone the repo:
-
-bash
-Copy
-Edit
 git clone https://github.com/ChawanSuryadev/yogalayer.git
-cd yogalayer
-Install dependencies:
 
-bash
-Copy
-Edit
+Install dependencies (root frontend):
 npm install
+
+Install backend dependencies:
 cd backend
 npm install
-Start frontend + backend together:
 
-bash
-Copy
-Edit
+Create .env files
+    In /backend/.env ➔
+        MONGO_URI=your_mongo_db_uri
+        JWT_SECRET=your_jwt_secret
+    In /yogalayer/.env ➔
+        VITE_API_BASE_URL=http://localhost:5000
+
+Start servers:
 npm run start-dev
-Frontend runs on http://localhost:3000
+(Runs both frontend at localhost:3000 and backend at localhost:5000)
 
-Backend runs on http://localhost:5000
+                                                
+                                                🔥 Current Things Setup
 
-📂 Project Structure
-bash
-Copy
-Edit
-yogalayer/
-├── backend/       # Express backend (server.js, models, routes)
-├── public/        # Static files
-├── src/           # React app (components, pages, utils)
-├── .env           # Frontend environment
-├── package.json   # Frontend package.json
-👨‍💻 Author
-GitHub: ChawanSuryadev
-
-🌟 Thanks for checking out Yogalayer!
+                        Setup	                            Status
+                Backend MongoDB Atlas               	✅ Connected
+                   Frontend Vercel                  	✅ Deployed
+                   Backend Render	                    ✅ Deployed
+                UptimeRobot Monitoring	                ✅ Active
+                Vercel Speed Insights	                ✅ Installed
+                Login, Cart, Wishlist	                ✅ Functional
