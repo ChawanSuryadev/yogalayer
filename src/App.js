@@ -17,7 +17,6 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Load user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -28,7 +27,6 @@ function App() {
     }
   }, []);
 
-  // Sync user to localStorage
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify({ ...user, cart, wishlist }));
@@ -37,7 +35,6 @@ function App() {
     }
   }, [user, cart, wishlist]);
 
-  // Sync cart/wishlist to backend
   useEffect(() => {
     if (user) {
       fetch(`http://localhost:5000/api/user/cart/${user._id}`, {
@@ -87,7 +84,12 @@ function App() {
         {showLogin && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <LoginModal onClose={() => setShowLogin(false)} setUser={setUser} setCart={setCart} setWishlist={setWishlist} />
+              <LoginModal
+                onClose={() => setShowLogin(false)}
+                setUser={setUser}
+                setCart={setCart}
+                setWishlist={setWishlist}
+              />
             </div>
           </div>
         )}
@@ -103,21 +105,24 @@ function App() {
                     name: "Redmi Note 13",
                     price: 22677,
                     mrp: 30999,
-                    image: "https://m.media-amazon.com/images/I/71YlH-4MUQL._AC_UY218_.jpg",
+                    image:
+                      "https://m.media-amazon.com/images/I/71YlH-4MUQL._AC_UY218_.jpg",
                   },
                   {
                     id: 2,
                     name: "Realme Narzo 60",
                     price: 26999,
                     mrp: 26999,
-                    image: "https://m.media-amazon.com/images/I/81Zt42ioCgL._AC_UY218_.jpg",
+                    image:
+                      "https://m.media-amazon.com/images/I/81Zt42ioCgL._AC_UY218_.jpg",
                   },
                   {
                     id: 3,
                     name: "iPhone 15 Pro",
                     price: 64400,
                     mrp: 69900,
-                    image: "https://m.media-amazon.com/images/I/81CgtwSII3L._AC_UY218_.jpg",
+                    image:
+                      "https://m.media-amazon.com/images/I/81CgtwSII3L._AC_UY218_.jpg",
                   },
                 ]}
                 addToCart={addToCart}
@@ -127,12 +132,33 @@ function App() {
             }
           />
           <Route path="/profile" element={<ProfilePage user={user} />} />
-          <Route path="/create-account" element={<CreateAccountPage setUser={setUser} setCart={setCart} setWishlist={setWishlist} />} />
-          <Route path="/orders" element={<OrderHistoryPage user={user} />} />
-          <Route path="/address" element={<AddressPage user={user} setUser={setUser} />} />
-          <Route path="/checkout" element={<CheckoutPage cart={cart} user={user} setCart={setCart} />} />
+          <Route
+            path="/create-account"
+            element={
+              <CreateAccountPage
+                setUser={setUser}
+                setCart={setCart}
+                setWishlist={setWishlist}
+              />
+            }
+          />
+          <Route
+            path="/orders"
+            element={<OrderHistoryPage user={user} />}
+          />
+          <Route
+            path="/address"
+            element={<AddressPage user={user} setUser={setUser} />}
+          />
+          <Route
+            path="/checkout"
+            element={
+              <CheckoutPage cart={cart} user={user} setCart={setCart} />
+            }
+          />
         </Routes>
       </Router>
+      <SpeedInsights />
     </>
   );
 }
