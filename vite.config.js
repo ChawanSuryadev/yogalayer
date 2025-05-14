@@ -1,9 +1,0 @@
-import { defineConfig } from 'vite';
-
-export default defineConfig({
-  server: {
-    proxy: {
-      '/api': 'http://localhost:5000', // Redirect /api requests to the backend server
-    },
-  },
-});
