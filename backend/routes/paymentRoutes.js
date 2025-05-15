@@ -9,7 +9,9 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Create order route
+console.log("RAZORPAY_KEY_ID:", process.env.RAZORPAY_KEY_ID); // ✅ Log the Razorpay Key ID
+
+// ✅ Create Razorpay Order
 router.post("/create-order", async (req, res) => {
   const { amount } = req.body;
   try {
@@ -18,15 +20,17 @@ router.post("/create-order", async (req, res) => {
       currency: "INR",
       receipt: `receipt_order_${Date.now()}`,
     };
+
     const order = await razorpay.orders.create(options);
-    res.json({ orderId: order.id, amount: order.amount, currency: order.currency });
+    console.log("Razorpay Order Created:", order);
+    res.status(200).json(order); // ✅ Send entire order object
   } catch (error) {
-    console.error(error);
+    console.error("Create Order Error:", error);
     res.status(500).json({ error: "Unable to create order" });
   }
 });
 
-// Verify payment signature route
+// ✅ Verify Razorpay Signature
 router.post("/verify", (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
@@ -36,8 +40,10 @@ router.post("/verify", (req, res) => {
     .digest("hex");
 
   if (generated_signature === razorpay_signature) {
+    console.log("Payment verified successfully");
     res.json({ status: "success" });
   } else {
+    console.error("Invalid payment signature");
     res.status(400).json({ status: "failure" });
   }
 });
