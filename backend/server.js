@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import userRoutes from "./routes/user.js";
+import adminRoutes from "./routes/admin/admin.js";
+import paymentRoutes from "./routes/paymentRoutes.js"; // ⬅️ New import
 
 dotenv.config();
 const app = express();
@@ -52,8 +54,10 @@ app.get("/", (req, res) => {
   res.send("Yogalayer backend is working ✅");
 });
 
-// ✅ Register user-related routes
+// ✅ Register routes
 app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/payment", paymentRoutes); // ⬅️ Payment route added
 
 // ✅ MongoDB connection
 mongoose

@@ -72,6 +72,11 @@ export default function Header({ onLoginClick, user, onLogout }) {
 
           <Link to="/orders" className="text-blue-600 hover:underline">My Orders</Link>
 
+          {user?.isAdmin && (
+            <Link to="/admin" className="text-red-600 hover:underline font-semibold">
+              Admin Dashboard
+            </Link>
+          )}
         </div>
       </div>
     </header>

@@ -10,6 +10,9 @@ import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AddressPage from "./pages/AddressPage";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Toaster } from "react-hot-toast";
+import AdminDashboard from "./pages/AdminDashboard";
+import { Navigate } from "react-router-dom";
+import CartPage from "./pages/CartPage";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -144,6 +147,13 @@ function App() {
               />
             }
           />
+          {/* ✅ Cart Route */}
+          <Route 
+            path="/cart" 
+            element={
+              <CartPage cart={cart} user={user} setCart={setCart} />
+            } 
+          />
           <Route
             path="/orders"
             element={<OrderHistoryPage user={user} />}
@@ -156,6 +166,17 @@ function App() {
             path="/checkout"
             element={
               <CheckoutPage cart={cart} user={user} setCart={setCart} />
+            }
+          />
+          {/* ✅ Admin Route */}
+          <Route
+            path="/admin"
+            element={
+              user?.isAdmin ? (
+                <AdminDashboard />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
         </Routes>
