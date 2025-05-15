@@ -14,10 +14,10 @@ app.use(helmet());
 // ✅ Define allowed origins
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://yogalayer-oofcb4eyl-suryas-projects-ddd73cd2.vercel.app"
+  "https://yogalayer.vercel.app"
 ];
 
-// ✅ Manually set CORS headers for preflight handling
+// ✅ Manually handle CORS headers and preflight OPTIONS
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -32,9 +32,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Use cors middleware with allowed origins
+// ✅ Use cors middleware with dynamic origin check
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
@@ -42,8 +48,8 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Health check route
-app.get('/', (req, res) => {
-  res.send('Yogalayer backend is working ✅');
+app.get("/", (req, res) => {
+  res.send("Yogalayer backend is working ✅");
 });
 
 // ✅ Register user-related routes

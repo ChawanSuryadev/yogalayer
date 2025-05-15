@@ -16,6 +16,8 @@ function App() {
   const [wishlist, setWishlist] = useState([]);
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -37,7 +39,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/api/user/cart/${user._id}`, {
+      fetch(`${apiUrl}/api/user/cart/${user._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cart }),
@@ -47,7 +49,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/api/user/wishlist/${user._id}`, {
+      fetch(`${apiUrl}/api/user/wishlist/${user._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ wishlist }),

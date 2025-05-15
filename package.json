@@ -6,6 +6,7 @@
   "dependencies": {
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.14",
+    "cors": "^2.8.5",
     "framer-motion": "^12.9.2",
     "helmet": "^8.1.0",
     "lucide-react": "^0.276.0",
