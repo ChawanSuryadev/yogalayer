@@ -59,6 +59,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/payment", paymentRoutes); // ⬅️ Payment route added
 
+
 // ✅ MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)

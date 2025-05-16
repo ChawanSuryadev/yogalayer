@@ -27,7 +27,6 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
     });
 
-    // ✅ Generate JWT token valid for 2 days
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
@@ -52,7 +51,6 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    // ✅ Generate JWT token valid for 2 days
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
@@ -133,6 +131,37 @@ router.post("/checkout/:id", async (req, res) => {
     user.cart = [];
     await user.save();
     res.json({ message: "Order placed", user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Add a single product order (used by Razorpay handler)
+router.post("/add-order", async (req, res) => {
+  const { userId, product, paymentInfo } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    user.orders.push({
+      product,
+      paymentInfo,
+      date: new Date(),
+    });
+
+    await user.save();
+    res.status(200).json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to add order" });
+  }
+});
+
+// ✅ Get all orders for a user
+router.get("/orders/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json({ orders: user.orders });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
