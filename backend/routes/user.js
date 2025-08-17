@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { verifyToken, verifyAdmin, verifySelfOrAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -64,7 +65,7 @@ router.post("/login", async (req, res) => {
 });
 
 // ✅ Update profile
-router.put("/profile/:id", async (req, res) => {
+router.put("/profile/:id", verifyToken, verifySelfOrAdmin, async (req, res) => {
   try {
     const updates = req.body;
     if (updates.password) {
@@ -78,7 +79,7 @@ router.put("/profile/:id", async (req, res) => {
 });
 
 // ✅ Update address
-router.put("/address/:id", async (req, res) => {
+router.put("/address/:id", verifyToken, async (req, res) => {
   try {
     const { address } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -93,7 +94,7 @@ router.put("/address/:id", async (req, res) => {
 });
 
 // ✅ Update cart
-router.put("/cart/:id", async (req, res) => {
+router.put("/cart/:id", verifyToken, async (req, res) => {
   try {
     const { cart } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -108,7 +109,7 @@ router.put("/cart/:id", async (req, res) => {
 });
 
 // ✅ Update wishlist
-router.put("/wishlist/:id", async (req, res) => {
+router.put("/wishlist/:id", verifyToken, async (req, res) => {
   try {
     const { wishlist } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -123,7 +124,7 @@ router.put("/wishlist/:id", async (req, res) => {
 });
 
 // ✅ Checkout
-router.post("/checkout/:id", async (req, res) => {
+router.post("/checkout/:id", verifyToken, async (req, res) => {
   try {
     const { items, total } = req.body;
     const user = await User.findById(req.params.id);
@@ -156,7 +157,7 @@ router.post("/add-order", async (req, res) => {
 });
 
 // ✅ Get all orders for a user
-router.get("/orders/:id", async (req, res) => {
+router.get("/orders/:id", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "User not found" });

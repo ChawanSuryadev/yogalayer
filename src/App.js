@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import AdminDashboard from "./pages/AdminDashboard";
 import { Navigate } from "react-router-dom";
 import CartPage from "./pages/CartPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -71,6 +72,7 @@ function App() {
   const calculateDiscount = (mrp, price) => {
     return Math.round(((mrp - price) / mrp) * 100);
   };
+  
 
   return (
     <>
@@ -156,16 +158,26 @@ function App() {
           />
           <Route
             path="/orders"
-            element={<OrderHistoryPage user={user} />}
+            element={
+              <ProtectedRoute user={user}>
+              <OrderHistoryPage user={user} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/address"
-            element={<AddressPage user={user} setUser={setUser} />}
+            element={
+              <ProtectedRoute user={user}>
+              <AddressPage user={user} setUser={setUser} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/checkout"
             element={
+              <ProtectedRoute user={user}>
               <CheckoutPage cart={cart} user={user} setCart={setCart} />
+              </ProtectedRoute>
             }
           />
           {/* ✅ Admin Route */}

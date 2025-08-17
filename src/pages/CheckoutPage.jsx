@@ -1,12 +1,13 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 export default function CheckoutPage({ cart, user, setCart }) {
   const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
   const handleCheckout = async () => {
     if (!user) {
-      alert("Please log in to complete checkout.");
-      return;
+      toast.error("Please login to continue");
+      return null;
     }
 
     try {

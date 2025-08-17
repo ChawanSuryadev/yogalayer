@@ -4,7 +4,7 @@ import axios from "axios";
 export default function PaymentButton({ amount = 500, user, setCart }) {
   const handlePayment = async () => {
     if (!user) {
-      alert("Please login first!");
+      toast.error("Please login to continue"); // ✅ unified toast style
       return;
     }
 

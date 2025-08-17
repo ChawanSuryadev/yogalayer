@@ -1,9 +1,27 @@
+import jwt from "jsonwebtoken";
+
 export function verifyToken(req, res, next) {
-  // Logic to verify JWT token from headers or cookies
-  // decode token, attach user info to req.user
-  // for now, pretend token decoded:
-  req.user = { id: "someuserid", isAdmin: true }; // TEMP for testing
-  next();
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ message: "No token" });
+
+  const token = authHeader.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Invalid token" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // { id, email, isAdmin }
+    next();
+  } catch (err) {
+    res.status(403).json({ message: "Token not valid" });
+  }
+}
+
+export function verifySelfOrAdmin(req, res, next) {
+  if (req.user.id === req.params.id || req.user.isAdmin) {
+    next();
+  } else {
+    res.status(403).json({ message: "Not allowed" });
+  }
 }
 
 export function verifyAdmin(req, res, next) {
